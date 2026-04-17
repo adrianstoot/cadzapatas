@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>CadZapatas.Calculation</RootNamespace>
+    <AssemblyName>CadZapatas.Calculation</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="MathNet.Numerics" Version="5.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CadZapatas.Core\CadZapatas.Core.csproj" />
+    <ProjectReference Include="..\CadZapatas.Foundations\CadZapatas.Foundations.csproj" />
+    <ProjectReference Include="..\CadZapatas.Retaining\CadZapatas.Retaining.csproj" />
+    <ProjectReference Include="..\CadZapatas.Reinforcement\CadZapatas.Reinforcement.csproj" />
+    <ProjectReference Include="..\CadZapatas.Geotechnics\CadZapatas.Geotechnics.csproj" />
+    <ProjectReference Include="..\CadZapatas.Materials\CadZapatas.Materials.csproj" />
+    <ProjectReference Include="..\CadZapatas.NormativeEngine\CadZapatas.NormativeEngine.csproj" />
+  </ItemGroup>
+</Project>

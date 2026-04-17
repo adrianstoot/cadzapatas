@@ -1,0 +1,18 @@
+<Application x:Class="CadZapatas.Desktop.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="Views/MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <SolidColorBrush x:Key="PrimaryBrush" Color="#2563EB"/>
+            <SolidColorBrush x:Key="PanelBrush" Color="#F3F4F6"/>
+            <SolidColorBrush x:Key="DarkText" Color="#1F2937"/>
+
+            <Style TargetType="Button">
+                <Setter Property="Padding" Value="10,4"/>
+                <Setter Property="Margin" Value="3"/>
+                <Setter Property="MinWidth" Value="90"/>
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

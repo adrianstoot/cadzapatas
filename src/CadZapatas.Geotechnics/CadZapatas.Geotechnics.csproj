@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>CadZapatas.Geotechnics</RootNamespace>
+    <AssemblyName>CadZapatas.Geotechnics</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="MathNet.Numerics" Version="5.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CadZapatas.Core\CadZapatas.Core.csproj" />
+    <ProjectReference Include="..\CadZapatas.Geometry\CadZapatas.Geometry.csproj" />
+  </ItemGroup>
+</Project>

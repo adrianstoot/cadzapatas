@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>CadZapatas.Documentation</RootNamespace>
+    <AssemblyName>CadZapatas.Documentation</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="QuestPDF" Version="2024.3.0" />
+    <PackageReference Include="ClosedXML" Version="0.102.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CadZapatas.Core\CadZapatas.Core.csproj" />
+    <ProjectReference Include="..\CadZapatas.Foundations\CadZapatas.Foundations.csproj" />
+    <ProjectReference Include="..\CadZapatas.Retaining\CadZapatas.Retaining.csproj" />
+    <ProjectReference Include="..\CadZapatas.Reinforcement\CadZapatas.Reinforcement.csproj" />
+    <ProjectReference Include="..\CadZapatas.Calculation\CadZapatas.Calculation.csproj" />
+    <ProjectReference Include="..\CadZapatas.Geotechnics\CadZapatas.Geotechnics.csproj" />
+    <ProjectReference Include="..\CadZapatas.Quantities\CadZapatas.Quantities.csproj" />
+  </ItemGroup>
+</Project>

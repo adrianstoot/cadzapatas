@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>CadZapatas.Samples</RootNamespace>
+    <AssemblyName>CadZapatas.SampleProject</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\CadZapatas.Core\CadZapatas.Core.csproj" />
+    <ProjectReference Include="..\..\src\CadZapatas.Foundations\CadZapatas.Foundations.csproj" />
+    <ProjectReference Include="..\..\src\CadZapatas.Retaining\CadZapatas.Retaining.csproj" />
+    <ProjectReference Include="..\..\src\CadZapatas.Reinforcement\CadZapatas.Reinforcement.csproj" />
+    <ProjectReference Include="..\..\src\CadZapatas.Materials\CadZapatas.Materials.csproj" />
+    <ProjectReference Include="..\..\src\CadZapatas.Geotechnics\CadZapatas.Geotechnics.csproj" />
+    <ProjectReference Include="..\..\src\CadZapatas.Calculation\CadZapatas.Calculation.csproj" />
+    <ProjectReference Include="..\..\src\CadZapatas.Documentation\CadZapatas.Documentation.csproj" />
+    <ProjectReference Include="..\..\src\CadZapatas.Quantities\CadZapatas.Quantities.csproj" />
+    <ProjectReference Include="..\..\src\CadZapatas.Persistence\CadZapatas.Persistence.csproj" />
+  </ItemGroup>
+</Project>

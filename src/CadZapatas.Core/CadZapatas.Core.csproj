@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>CadZapatas.Core</RootNamespace>
+    <AssemblyName>CadZapatas.Core</AssemblyName>
+  </PropertyGroup>
+</Project>

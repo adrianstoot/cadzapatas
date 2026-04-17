@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>CadZapatas.Quantities</RootNamespace>
+    <AssemblyName>CadZapatas.Quantities</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CadZapatas.Core\CadZapatas.Core.csproj" />
+    <ProjectReference Include="..\CadZapatas.Foundations\CadZapatas.Foundations.csproj" />
+    <ProjectReference Include="..\CadZapatas.Retaining\CadZapatas.Retaining.csproj" />
+    <ProjectReference Include="..\CadZapatas.Reinforcement\CadZapatas.Reinforcement.csproj" />
+    <ProjectReference Include="..\CadZapatas.Materials\CadZapatas.Materials.csproj" />
+  </ItemGroup>
+</Project>

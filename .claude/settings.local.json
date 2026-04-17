@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rm -rf spec)",
+      "Bash(mkdir -p src tests samples docs)"
+    ]
+  }
+}

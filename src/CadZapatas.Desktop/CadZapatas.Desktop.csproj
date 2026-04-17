@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>false</UseWindowsForms>
+    <RootNamespace>CadZapatas.Desktop</RootNamespace>
+    <AssemblyName>CadZapatas</AssemblyName>
+    <ApplicationIcon />
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="HelixToolkit.Wpf" Version="2.25.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CadZapatas.Core\CadZapatas.Core.csproj" />
+    <ProjectReference Include="..\CadZapatas.Geometry\CadZapatas.Geometry.csproj" />
+    <ProjectReference Include="..\CadZapatas.Geotechnics\CadZapatas.Geotechnics.csproj" />
+    <ProjectReference Include="..\CadZapatas.Foundations\CadZapatas.Foundations.csproj" />
+    <ProjectReference Include="..\CadZapatas.Retaining\CadZapatas.Retaining.csproj" />
+    <ProjectReference Include="..\CadZapatas.Reinforcement\CadZapatas.Reinforcement.csproj" />
+    <ProjectReference Include="..\CadZapatas.Materials\CadZapatas.Materials.csproj" />
+    <ProjectReference Include="..\CadZapatas.Calculation\CadZapatas.Calculation.csproj" />
+    <ProjectReference Include="..\CadZapatas.NormativeEngine\CadZapatas.NormativeEngine.csproj" />
+    <ProjectReference Include="..\CadZapatas.Persistence\CadZapatas.Persistence.csproj" />
+    <ProjectReference Include="..\CadZapatas.Documentation\CadZapatas.Documentation.csproj" />
+    <ProjectReference Include="..\CadZapatas.Quantities\CadZapatas.Quantities.csproj" />
+  </ItemGroup>
+</Project>

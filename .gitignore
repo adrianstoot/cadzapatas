@@ -1,0 +1,33 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+*.pdb
+*.dll.config
+
+## VS Code
+.vscode/
+
+## Rider
+.idea/
+
+## Output
+out/
+publish/
+artifacts/
+
+## Database
+*.db
+*.db-shm
+*.db-wal
+!samples/SampleProject/*.db
+
+## Logs
+*.log
+logs/
+
+## OS
+Thumbs.db
+.DS_Store

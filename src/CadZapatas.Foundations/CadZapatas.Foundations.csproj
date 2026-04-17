@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>CadZapatas.Foundations</RootNamespace>
+    <AssemblyName>CadZapatas.Foundations</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CadZapatas.Core\CadZapatas.Core.csproj" />
+    <ProjectReference Include="..\CadZapatas.Geometry\CadZapatas.Geometry.csproj" />
+    <ProjectReference Include="..\CadZapatas.Materials\CadZapatas.Materials.csproj" />
+    <ProjectReference Include="..\CadZapatas.Geotechnics\CadZapatas.Geotechnics.csproj" />
+  </ItemGroup>
+</Project>

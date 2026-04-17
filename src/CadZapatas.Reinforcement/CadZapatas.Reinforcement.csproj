@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>CadZapatas.Reinforcement</RootNamespace>
+    <AssemblyName>CadZapatas.Reinforcement</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CadZapatas.Core\CadZapatas.Core.csproj" />
+    <ProjectReference Include="..\CadZapatas.Geometry\CadZapatas.Geometry.csproj" />
+    <ProjectReference Include="..\CadZapatas.Materials\CadZapatas.Materials.csproj" />
+  </ItemGroup>
+</Project>
