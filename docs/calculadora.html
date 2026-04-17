@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CadZapatas — Calculadora Web</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+      color: #333;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    header {
+      background: white;
+      padding: 30px;
+      border-radius: 8px 8px 0 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: center;
+      margin-bottom: 0;
+    }
+    header h1 {
+      color: #667eea;
+      margin-bottom: 5px;
+    }
+    header p {
+      color: #666;
+      font-size: 0.95em;
+    }
+    .content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      background: white;
+      border-radius: 0 0 8px 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    .panel {
+      padding: 30px;
+      border-right: 1px solid #eee;
+    }
+    .panel:last-child {
+      border-right: none;
+    }
+    .panel h2 {
+      color: #667eea;
+      margin-bottom: 20px;
+      font-size: 1.3em;
+      border-bottom: 2px solid #667eea;
+      padding-bottom: 10px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #555;
+      font-weight: 500;
+      font-size: 0.9em;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 0.95em;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+    .unit {
+      color: #999;
+      font-size: 0.85em;
+      margin-top: 3px;
+    }
+    .btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+    .result-item {
+      background: #f9f9f9;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-left: 4px solid #667eea;
+      border-radius: 3px;
+    }
+    .result-label {
+      color: #666;
+      font-size: 0.85em;
+      margin-bottom: 5px;
+    }
+    .result-value {
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #667eea;
+      font-family: 'Courier New', monospace;
+    }
+    .result-unit {
+      color: #999;
+      font-size: 0.85em;
+      margin-top: 3px;
+    }
+    .verdict {
+      padding: 12px;
+      margin-bottom: 15px;
+      border-radius: 4px;
+      font-weight: 600;
+      text-align: center;
+    }
+    .verdict.pass {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    .verdict.fail {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    .verdict.warn {
+      background: #fff3cd;
+      color: #856404;
+      border: 1px solid #ffeaa7;
+    }
+    .tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #eee;
+    }
+    .tab-btn {
+      padding: 12px 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #999;
+      font-weight: 500;
+      border-bottom: 3px solid transparent;
+      transition: all 0.3s;
+    }
+    .tab-btn.active {
+      color: #667eea;
+      border-bottom-color: #667eea;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .info-box {
+      background: #e8f0fe;
+      border-left: 4px solid #667eea;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 3px;
+      font-size: 0.9em;
+      color: #667eea;
+    }
+    @media (max-width: 900px) {
+      .content {
+        grid-template-columns: 1fr;
+      }
+      .panel {
+        border-right: none;
+        border-bottom: 1px solid #eee;
+      }
+      .panel:last-child {
+        border-bottom: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🧮 CadZapatas — Calculadora Web</h1>
+      <p>Cálculos de cimentaciones en tiempo real (CTE DB-SE-C + RD 470/2021)</p>
+    </header>
+
+    <div class="content">
+      <!-- Panel Izquierdo: Entrada de datos -->
+      <div class="panel">
+        <h2>📋 Datos de entrada</h2>
+
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="suelo">Suelo</button>
+          <button class="tab-btn" data-tab="zapata">Zapata</button>
+          <button class="tab-btn" data-tab="hormigon">Hormigón</button>
+        </div>
+
+        <!-- TAB: SUELO -->
+        <div id="tab-suelo" class="tab-content active">
+          <div class="info-box">
+            Parámetros característicos del suelo (CTE DB-SE-C)
+          </div>
+
+          <div class="form-group">
+            <label for="phi">Ángulo de rozamiento (φ)</label>
+            <input type="number" id="phi" value="30" min="0" max="45">
+            <div class="unit">grados</div>
+          </div>
+
+          <div class="form-group">
+            <label for="cu">Cohesión no drenada (cu)</label>
+            <input type="number" id="cu" value="0" min="0">
+            <div class="unit">kPa</div>
+          </div>
+
+          <div class="form-group">
+            <label for="gamma">Peso específico (γ)</label>
+            <input type="number" id="gamma" value="18" min="1" max="25" step="0.1">
+            <div class="unit">kN/m³</div>
+          </div>
+
+          <div class="form-group">
+            <label for="gamma_sat">Peso específico saturado (γ_sat)</label>
+            <input type="number" id="gamma_sat" value="20" min="1" max="25" step="0.1">
+            <div class="unit">kN/m³</div>
+          </div>
+
+          <div class="form-group">
+            <label for="zw">Profundidad del nivel freático</label>
+            <input type="number" id="zw" value="5" min="0" step="0.1">
+            <div class="unit">m (desde superficie)</div>
+          </div>
+
+          <div class="form-group">
+            <label for="terrain_group">Grupo de terreno (CTE)</label>
+            <select id="terrain_group">
+              <option value="T1">T1 — Rocas y suelos granulares densos</option>
+              <option value="T2" selected>T2 — Suelos granulares normales</option>
+              <option value="T3">T3 — Suelos finos y rocas blandas</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- TAB: ZAPATA -->
+        <div id="tab-zapata" class="tab-content">
+          <div class="info-box">
+            Dimensiones y cargas de la cimentación
+          </div>
+
+          <div class="form-group">
+            <label for="width">Ancho (B)</label>
+            <input type="number" id="width" value="2.4" min="0.5" step="0.1">
+            <div class="unit">m</div>
+          </div>
+
+          <div class="form-group">
+            <label for="length">Largo (L)</label>
+            <input type="number" id="length" value="2.4" min="0.5" step="0.1">
+            <div class="unit">m</div>
+          </div>
+
+          <div class="form-group">
+            <label for="depth">Profundidad (D_f)</label>
+            <input type="number" id="depth" value="0.8" min="0.3" step="0.1">
+            <div class="unit">m</div>
+          </div>
+
+          <div class="form-group">
+            <label for="vertical_load">Carga vertical (N)</label>
+            <input type="number" id="vertical_load" value="1100" min="10">
+            <div class="unit">kN</div>
+          </div>
+
+          <div class="form-group">
+            <label for="horiz_load">Carga horizontal (H)</label>
+            <input type="number" id="horiz_load" value="0" min="0">
+            <div class="unit">kN</div>
+          </div>
+
+          <div class="form-group">
+            <label for="eccentricity">Excentricidad (e)</label>
+            <input type="number" id="eccentricity" value="0" min="0" step="0.01">
+            <div class="unit">m</div>
+          </div>
+        </div>
+
+        <!-- TAB: HORMIGÓN -->
+        <div id="tab-hormigon" class="tab-content">
+          <div class="info-box">
+            Resistencia del hormigón (CE RD 470/2021)
+          </div>
+
+          <div class="form-group">
+            <label for="fck">Resistencia característica (f_ck)</label>
+            <input type="number" id="fck" value="25" min="12" max="100">
+            <div class="unit">MPa</div>
+          </div>
+
+          <div class="form-group">
+            <label for="canto">Canto útil (d)</label>
+            <input type="number" id="canto" value="0.5" min="0.1" step="0.01">
+            <div class="unit">m</div>
+          </div>
+
+          <div class="form-group">
+            <label for="exposure_class">Clase de exposición</label>
+            <select id="exposure_class">
+              <option value="X0">X0 — Muy baja exposición</option>
+              <option value="XC1" selected>XC1 — Exposición normal</option>
+              <option value="XC2">XC2 — Exposición moderada</option>
+              <option value="XC3">XC3 — Exposición en ciclos</option>
+              <option value="XC4">XC4 — Exposición permanente</option>
+              <option value="XD1">XD1 — Cloruros moderados</option>
+              <option value="XS1">XS1 — Ambiente marino</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="btn" onclick="calcular()">🧮 Calcular</button>
+      </div>
+
+      <!-- Panel Derecho: Resultados -->
+      <div class="panel">
+        <h2>📊 Resultados</h2>
+
+        <!-- Hundimiento -->
+        <div id="tab-hundimiento" class="tab-content active">
+          <h3 style="color: #764ba2; margin-bottom: 15px;">Capacidad portante (Brinch-Hansen)</h3>
+
+          <div class="result-item">
+            <div class="result-label">Presión última (qu)</div>
+            <div class="result-value" id="qu">—</div>
+            <div class="result-unit">kPa</div>
+          </div>
+
+          <div class="result-item">
+            <div class="result-label">Presión de trabajo (qadm)</div>
+            <div class="result-value" id="qadm">—</div>
+            <div class="result-unit">kPa (F.S. = 3.0)</div>
+          </div>
+
+          <div class="result-item">
+            <div class="result-label">Presión actuante (σ)</div>
+            <div class="result-value" id="sigma">—</div>
+            <div class="result-unit">kPa</div>
+          </div>
+
+          <div id="verdict-hundimiento" class="verdict" style="display: none;"></div>
+
+          <h3 style="color: #764ba2; margin-bottom: 15px; margin-top: 25px;">Detalles del cálculo</h3>
+
+          <div class="result-item">
+            <div class="result-label">Factor Nq</div>
+            <div class="result-value" id="nq">—</div>
+          </div>
+
+          <div class="result-item">
+            <div class="result-label">Factor Nc</div>
+            <div class="result-value" id="nc">—</div>
+          </div>
+
+          <div class="result-item">
+            <div class="result-label">Factor Nγ</div>
+            <div class="result-value" id="ngamma">—</div>
+          </div>
+
+          <div class="result-item">
+            <div class="result-label">Factores de forma (sc, sq, sγ)</div>
+            <div class="result-value" id="shape_factors">—</div>
+          </div>
+
+          <div class="result-item">
+            <div class="result-label">Dimensiones efectivas (B', L')</div>
+            <div class="result-value" id="eff_dims">—</div>
+            <div class="result-unit">m</div>
+          </div>
+        </div>
+
+        <!-- Asientos -->
+        <div id="tab-asientos" class="tab-content" style="display: none;">
+          <h3 style="color: #764ba2; margin-bottom: 15px;">Asiento elástico (Burland-Burbidge simplificado)</h3>
+
+          <div class="result-item">
+            <div class="result-label">Asiento elástico</div>
+            <div class="result-value" id="settlement">—</div>
+            <div class="result-unit">mm</div>
+          </div>
+
+          <div class="result-item">
+            <div class="result-label">Relación diferencial máxima</div>
+            <div class="result-value" id="differential">—</div>
+            <div class="result-unit">1 / —</div>
+          </div>
+
+          <div id="verdict-asientos" class="verdict" style="display: none;"></div>
+        </div>
+
+        <!-- Estabilidad -->
+        <div id="tab-estabilidad" class="tab-content" style="display: none;">
+          <h3 style="color: #764ba2; margin-bottom: 15px;">Estabilidad global</h3>
+
+          <div class="result-item">
+            <div class="result-label">Factor de seguridad (vuelco)</div>
+            <div class="result-value" id="fs_overturn">—</div>
+            <div class="result-unit">F.S. ≥ 1.5</div>
+          </div>
+
+          <div class="result-item">
+            <div class="result-label">Factor de seguridad (deslizamiento)</div>
+            <div class="result-value" id="fs_sliding">—</div>
+            <div class="result-unit">F.S. ≥ 1.3</div>
+          </div>
+
+          <div class="result-item">
+            <div class="result-label">Excentricidad resultante (e')</div>
+            <div class="result-value" id="ecc_result">—</div>
+            <div class="result-unit">m (máx: B/6 = —)</div>
+          </div>
+
+          <div id="verdict-estabilidad" class="verdict" style="display: none;"></div>
+        </div>
+
+        <div style="margin-top: 30px; padding: 15px; background: #f0f0f0; border-radius: 4px; font-size: 0.85em; color: #666;">
+          <strong>Normativa:</strong><br>
+          • CTE DB-SE-C (Cimientos)<br>
+          • Real Decreto 470/2021 (Código Estructural)<br>
+          • Método Brinch-Hansen para hundimiento<br>
+          • EHE-08 compatible
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Cambiar tabs
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const tabName = e.target.dataset.tab;
+        document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+        document.getElementById(`tab-${tabName}`).classList.add('active');
+        document.querySelectorAll('.tab-btn').forEach(tb => tb.classList.remove('active'));
+        e.target.classList.add('active');
+      });
+    });
+
+    // Cálculo principal
+    function calcular() {
+      const phi = parseFloat(document.getElementById('phi').value);
+      const cu = parseFloat(document.getElementById('cu').value);
+      const gamma = parseFloat(document.getElementById('gamma').value);
+      const gamma_sat = parseFloat(document.getElementById('gamma_sat').value);
+      const zw = parseFloat(document.getElementById('zw').value);
+      const B = parseFloat(document.getElementById('width').value);
+      const L = parseFloat(document.getElementById('length').value);
+      const D = parseFloat(document.getElementById('depth').value);
+      const N = parseFloat(document.getElementById('vertical_load').value);
+      const H = parseFloat(document.getElementById('horiz_load').value);
+      const e = parseFloat(document.getElementById('eccentricity').value);
+      const fck = parseFloat(document.getElementById('fck').value);
+      const fcd = fck / 1.5; // coeficiente de minoración 1.5
+
+      // Convertir φ a radianes
+      const phi_rad = phi * Math.PI / 180;
+
+      // 1. FACTORES DE BRINCH-HANSEN
+      const Nq = Math.exp(Math.tan(phi_rad) * Math.PI) * Math.pow(Math.tan(Math.PI/4 + phi_rad/2), 2);
+      const Nc = (Nq - 1) / Math.tan(phi_rad);
+      const Ngamma = 2 * (Nq - 1) * Math.tan(phi_rad);
+
+      // 2. DIMENSIONES EFECTIVAS (Meyerhof)
+      const B_prime = B - 2 * e;
+      const L_prime = L; // asumiendo M_L = 0
+
+      // 3. FACTORES DE FORMA
+      const sc = 1 + (B_prime / L_prime) * (Nq / Nc);
+      const sq = 1 + (B_prime / L_prime) * Math.tan(phi_rad);
+      const sgamma = 1 - 0.4 * (B_prime / L_prime);
+
+      // 4. FACTORES DE PROFUNDIDAD
+      const dc = 1 + 0.4 * (D / B_prime);
+      const dq = 1 + 2 * Math.tan(phi_rad) * (1 - Math.sin(phi_rad)) ** 2 * (D / B_prime);
+      const dgamma = 1;
+
+      // 5. CÁLCULO DE PRESIÓN ÚLTIMA (Brinch-Hansen)
+      // qu = c*Nc*sc*dc + q0*Nq*sq*dq + 0.5*γ*B'*Nγ*sγ*dγ
+      const q0 = gamma * D; // presión efectiva en profundidad
+      const qu = cu * Nc * sc * dc + q0 * Nq * sq * dq + 0.5 * gamma * B_prime * Ngamma * sgamma * dgamma;
+
+      // 6. PRESIÓN ADMISIBLE (Factor de seguridad 3.0)
+      const qadm = qu / 3.0;
+
+      // 7. PRESIÓN ACTUANTE
+      const sigma = (N * 1000) / (B_prime * L_prime); // convertir kN a N, luego dividir por m²
+
+      // 8. ASIENTO ELÁSTICO (Schleicher simplificado)
+      // s = (σ * B_prime / Ecm) * I_s, con I_s ≈ 0.82 para zapatas
+      const fcm = fck + 8;
+      const Ecm = 22 * Math.pow(fcm / 10, 0.3) * 1000; // MPa a kPa
+      const Is = 0.82;
+      const settlement = (sigma / Ecm) * B_prime * 1000 * Is; // en mm
+
+      // 9. ESTABILIDAD
+      // Factor de seguridad vuelco (simplificado)
+      const fs_overturn = (N * B_prime / 2) / (H * D); // M_estabilizador / M_volcador
+
+      // Factor de seguridad deslizamiento
+      const fs_sliding = (N * Math.tan(phi_rad)) / H;
+
+      // Excentricidad resultante
+      const e_result = Math.abs(e) + (H * D) / N;
+      const max_e = B_prime / 6;
+
+      // Mostrar resultados
+      document.getElementById('qu').textContent = qu.toFixed(1);
+      document.getElementById('qadm').textContent = qadm.toFixed(1);
+      document.getElementById('sigma').textContent = sigma.toFixed(1);
+      document.getElementById('nq').textContent = Nq.toFixed(2);
+      document.getElementById('nc').textContent = Nc.toFixed(2);
+      document.getElementById('ngamma').textContent = Ngamma.toFixed(2);
+      document.getElementById('shape_factors').textContent = `${sc.toFixed(3)}, ${sq.toFixed(3)}, ${sgamma.toFixed(3)}`;
+      document.getElementById('eff_dims').textContent = `${B_prime.toFixed(2)} × ${L_prime.toFixed(2)}`;
+
+      // Veredicto hundimiento
+      const verdict_h = document.getElementById('verdict-hundimiento');
+      if (sigma <= qadm) {
+        verdict_h.className = 'verdict pass';
+        verdict_h.textContent = '✓ HUNDIMIENTO OK — σ ≤ qadm';
+      } else {
+        verdict_h.className = 'verdict fail';
+        verdict_h.textContent = '✗ HUNDIMIENTO NO OK — σ > qadm';
+      }
+      verdict_h.style.display = 'block';
+
+      // Asientos
+      document.getElementById('settlement').textContent = settlement.toFixed(1);
+      document.getElementById('differential').textContent = (B_prime * 1000 / settlement).toFixed(0);
+      const verdict_s = document.getElementById('verdict-asientos');
+      if (settlement < 50) {
+        verdict_s.className = 'verdict pass';
+        verdict_s.textContent = '✓ ASIENTOS ACEPTABLES — < 50 mm';
+      } else {
+        verdict_s.className = 'verdict warn';
+        verdict_s.textContent = '⚠ ASIENTOS MODERADOS — > 50 mm (verificar diferenciales)';
+      }
+      verdict_s.style.display = 'block';
+
+      // Estabilidad
+      document.getElementById('fs_overturn').textContent = fs_overturn.toFixed(2);
+      document.getElementById('fs_sliding').textContent = fs_sliding.toFixed(2);
+      document.getElementById('ecc_result').textContent = e_result.toFixed(3);
+
+      // Veredicto estabilidad
+      const verdict_est = document.getElementById('verdict-estabilidad');
+      let est_ok = fs_overturn >= 1.5 && fs_sliding >= 1.3 && e_result <= max_e;
+      if (est_ok) {
+        verdict_est.className = 'verdict pass';
+        verdict_est.textContent = '✓ ESTABILIDAD OK';
+      } else {
+        verdict_est.className = 'verdict fail';
+        verdict_est.textContent = '✗ ESTABILIDAD NO OK';
+      }
+      verdict_est.style.display = 'block';
+    }
+
+    // Calcular al cargar
+    window.addEventListener('load', calcular);
+  </script>
+</body>
+</html>
